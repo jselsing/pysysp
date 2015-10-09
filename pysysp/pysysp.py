@@ -240,6 +240,13 @@ class BandPass(GeneralSpectrum):
         else:
             warnings.warn("Warning: Smoothing requires Scipy, returning a linear interpolation instead.")
             self.interpolated_response = lambda w: np.interp(w, self.wavelength, self.response, left=0., right=0.)
+
+
+    def update_bandpass(self):
+        """
+        Used to update bandpass if self.wavelength and/or self.repsonse has been updated manually.
+        """
+        self.smooth(kind=self._smt)
             
     def __call__(self, w):
         return self.interpolated_response(w)
